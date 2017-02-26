@@ -1,0 +1,34 @@
+{
+  "name": "pino-redis",
+  "version": "1.0.0",
+  "description": "load pino logs into redis",
+  "main": "pino-redis.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "pino",
+    "redis",
+    "logs",
+    "logger"
+  ],
+  "author": "Anh Thang Bui",
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "^3.4.7",
+    "fast-json-parse": "^1.0.2",
+    "ioredis": "^2.5.0",
+    "pump": "^1.0.2",
+    "readable-stream": "^2.2.3",
+    "split2": "^2.1.1"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/buianhthang/pino-redis.git"
+  },
+  "bugs": {
+    "url": "https://github.com/buianhthang/pino-redis/issues"
+  },
+  "homepage": "https://github.com/buianhthang/pino-redis#readme"
+}
