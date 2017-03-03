@@ -1,4 +1,4 @@
-# pino-redis
+# pino-redis&nbsp;&nbsp;[![npm version](https://badge.fury.io/js/pino-redis.svg)](https://badge.fury.io/js/pino-redis)
 
 Load [pino](https://github.com/pinojs/pino) logs into [Redis](https://redis.io).
 

@@ -1,6 +1,6 @@
 {
   "name": "pino-redis",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "load pino logs into redis",
   "main": "pino-redis.js",
   "scripts": {
@@ -15,7 +15,6 @@
   "author": "Anh Thang Bui",
   "license": "MIT",
   "dependencies": {
-    "bluebird": "^3.4.7",
     "fast-json-parse": "^1.0.2",
     "ioredis": "^2.5.0",
     "pump": "^1.0.2",

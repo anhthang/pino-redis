@@ -7,12 +7,6 @@ const Parse = require('fast-json-parse')
 const split = require('split2')
 const pump = require('pump')
 const zlib = require('zlib')
-const Promise = require('bluebird')
-
-function compress(inflated) {
-    var c = zlib.gzipSync(inflated).toString('binary')
-    return Promise.resolve(c)
-}
 
 function pinoRedis(opts) {
     const splitter = split(function(line) {
@@ -29,26 +23,76 @@ function pinoRedis(opts) {
 
     const writable = new Writable({
         objectMode: true,
+        writev: function(chunks, cb) {
+            var pipeline = redis.pipeline()
+            chunks.forEach(item => {
+                var body = item.chunk
+                if (!body.key) throw new Error('key is required')
+
+                const ttl = body.ttl || 60
+                const gzip = !!body.gzip
+                const value = JSON.stringify(body)
+
+                if (gzip) {
+                    zlib.gzip(value, (c_err, buffer) => {
+                        if (!c_err) {
+                            pipeline.set(body.key, buffer.toString('binary'), 'EX', ttl)
+                        } else {
+                            splitter.emit('insertError', c_err)
+                        }
+                    })
+                } else {
+                    pipeline.set(body.key, value, 'EX', ttl)
+                }
+
+                pipeline.exec((err, result) => {
+                    if (!err) {
+                        result.forEach(res => {
+                            if (!res[0]) {
+                                splitter.emit('insert', body)
+                            } else {
+                                splitter.emit('insertError', res)
+                            }
+                        })
+                    } else {
+                        splitter.emit('insertError', err)
+                    }
+                    cb()
+                })
+            })
+        },
         write: function(body, enc, cb) {
+            if (!body.key) throw new Error('key is required')
+
             const ttl = body.ttl || 60
             const gzip = !!body.gzip
             const value = JSON.stringify(body)
 
-            var setCache
             if (gzip) {
-                setCache = compress(value).then(gzipped => redis.set(body.key, gzipped, 'EX', ttl))
+                zlib.gzip(value, (c_err, buffer) => {
+                    if (!c_err) {
+                        redis.set(body.key, buffer.toString('binary'), 'EX', ttl, function(err, result) {
+                            if (!err) {
+                                splitter.emit('insert', body)
+                            } else {
+                                splitter.emit('insertError', err)
+                            }
+                            cb()
+                        })
+                    } else {
+                        splitter.emit('insertError', c_err)
+                    }
+                })
             } else {
-                setCache = redis.set(body.key, value, 'EX', ttl)
+                redis.set(body.key, value, 'EX', ttl, function(err, result) {
+                    if (!err) {
+                        splitter.emit('insert', body)
+                    } else {
+                        splitter.emit('insertError', err)
+                    }
+                    cb()
+                })
             }
-
-            setCache.then(res => {
-                if (res == 'OK') {
-                    splitter.emit('insert', body)
-                } else {
-                    splitter.emit('insertError', res)
-                }
-                cb()
-            })
         }
     })
 
