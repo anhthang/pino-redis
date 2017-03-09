@@ -25,6 +25,14 @@ logger.info(meta, message)
 
 ```
 
+## .pino([meta], message)
+
+### Parameters:
++ `meta` (object)
+    * `key` (string): Required. Key will hold the string value.
+    * `ttl` (number): Set `key` to timeout after a given number of seconds. Default `60`
+    * `gzip` (boolean): Use gzip to compress before log into redis. Default `false`
+
 ## License
 
 Licensed under [MIT](./LICENSE).

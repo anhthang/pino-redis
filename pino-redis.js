@@ -33,16 +33,17 @@ function pinoRedis(opts) {
                 const gzip = !!body.gzip
                 const value = JSON.stringify(body)
 
+                var redisKey = `${body.level}:${body.key}`
                 if (gzip) {
                     zlib.gzip(value, (c_err, buffer) => {
                         if (!c_err) {
-                            pipeline.set(body.key, buffer.toString('binary'), 'EX', ttl)
+                            pipeline.set(redisKey, buffer.toString('binary'), 'EX', ttl)
                         } else {
                             splitter.emit('insertError', c_err)
                         }
                     })
                 } else {
-                    pipeline.set(body.key, value, 'EX', ttl)
+                    pipeline.set(redisKey, value, 'EX', ttl)
                 }
 
                 pipeline.exec((err, result) => {
@@ -68,10 +69,11 @@ function pinoRedis(opts) {
             const gzip = !!body.gzip
             const value = JSON.stringify(body)
 
+            var redisKey = `${body.level}:${body.key}`
             if (gzip) {
                 zlib.gzip(value, (c_err, buffer) => {
                     if (!c_err) {
-                        redis.set(body.key, buffer.toString('binary'), 'EX', ttl, function(err, result) {
+                        redis.set(redisKey, buffer.toString('binary'), 'EX', ttl, function(err, result) {
                             if (!err) {
                                 splitter.emit('insert', body)
                             } else {
@@ -84,7 +86,7 @@ function pinoRedis(opts) {
                     }
                 })
             } else {
-                redis.set(body.key, value, 'EX', ttl, function(err, result) {
+                redis.set(redisKey, value, 'EX', ttl, function(err, result) {
                     if (!err) {
                         splitter.emit('insert', body)
                     } else {
