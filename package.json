@@ -1,6 +1,6 @@
 {
   "name": "pino-redis",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "load pino logs into redis",
   "main": "pino-redis.js",
   "scripts": {
