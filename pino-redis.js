@@ -5,6 +5,8 @@ const split = require('split2')
 const pump = require('pump')
 const zlib = require('zlib')
 const minimist = require('minimist')
+const fs = require('fs')
+const path = require('path')
 
 function pinoRedis(opts) {
     console.log('opts', opts)
@@ -106,6 +108,10 @@ function pinoRedis(opts) {
 module.exports = pinoRedis
 
 function start(opts) {
+    if (opts.help) {
+        console.log(fs.readFileSync(path.join(__dirname, './options.txt'), 'utf8'))
+        return
+    }
     if (opts.version) {
         console.log('pino-redis', require('./package.json').version)
         return

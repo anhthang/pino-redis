@@ -1,0 +1,9 @@
+Usage: pino-redis [options]
+
+  Load pino logs into Redis
+
+  Options:
+
+    -h, --help                      output usage information
+    -V, --version                   output the version number
+    -U, --connectionUrl <url>       redis connection url

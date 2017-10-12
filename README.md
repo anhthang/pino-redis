@@ -10,6 +10,12 @@ npm install pino-redis
 
 ## Usage
 
+Write logs into redis
+
+```
+node my-app.js | pino-redis [options]
+```
+
 ```javascript
 var pinoRedis = require('pino-redis')({
     connectionUrl: `your redis connection url`
@@ -25,6 +31,19 @@ logger.info(meta, message)
 
 ```
 
+## Options
+
+```
+Usage: pino-redis [options]
+
+  Load pino logs into Redis
+
+  Options:
+
+    -h, --help                      output usage information
+    -V, --version                   output the version number
+    -U, --connectionUrl <url>       redis connection url
+```
 ## .pino([meta], message)
 
 ### Parameters:
