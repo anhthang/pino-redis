@@ -16,7 +16,8 @@
   "license": "MIT",
   "dependencies": {
     "fast-json-parse": "^1.0.2",
-    "ioredis": "^2.5.0",
+    "ioredis": "^3.1.4",
+    "minimist": "^1.2.0",
     "pump": "^1.0.2",
     "readable-stream": "^2.2.3",
     "split2": "^2.1.1"
