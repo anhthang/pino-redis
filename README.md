@@ -1,6 +1,8 @@
-# pino-redis&nbsp;&nbsp;[![npm version](https://badge.fury.io/js/pino-redis.svg)](https://badge.fury.io/js/pino-redis)
+# pino-redis
 
 Load [pino](https://github.com/pinojs/pino) logs into [Redis](https://redis.io).
+
+[![npm](https://flat.badgen.net/npm/v/pino-redis)](https://npmjs.com/package/pino-redis) ![download](https://flat.badgen.net/npm/dt/pino-redis) ![dependents](https://flat.badgen.net/npm/dependents/pino-redis)
 
 ## Install
 
