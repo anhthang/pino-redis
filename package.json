@@ -15,12 +15,12 @@
   "author": "Anh Thang Bui",
   "license": "MIT",
   "dependencies": {
-    "fast-json-parse": "^1.0.2",
-    "ioredis": "^3.1.4",
-    "minimist": "^1.2.0",
-    "pump": "^1.0.2",
-    "readable-stream": "^2.2.3",
-    "split2": "^2.1.1"
+    "fast-json-parse": "^1.0.3",
+    "ioredis": "^4.16.3",
+    "minimist": "^1.2.5",
+    "pump": "^3.0.0",
+    "readable-stream": "^3.6.0",
+    "split2": "^3.1.1"
   },
   "devDependencies": {},
   "repository": {
